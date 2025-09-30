@@ -3,34 +3,35 @@ from nbconvert import PythonExporter
 import pandas as pd
 import pickle
 
-# Load the notebook
+# Path to your notebook
 notebook_path = "notebooks/Titanic Dataset.ipynb"
+
+# Load notebook
 with open(notebook_path, "r", encoding="utf-8") as f:
     nb = nbformat.read(f, as_version=4)
 
-# Convert notebook to Python code
+# Convert notebook to python code
 exporter = PythonExporter()
 python_code, _ = exporter.from_notebook_node(nb)
 
-# Execute notebook code in a separate namespace
+# Run the code in isolated namespace
 namespace = {}
 exec(python_code, namespace)
 
 # Get dataframe
 df = namespace.get("df")
 if df is None:
-    raise ValueError("DataFrame 'df' not found in the notebook.")
+    raise ValueError("DataFrame 'df' not found in notebook. Make sure df is defined inside Titanic Dataset.ipynb")
 
-# Prepare features and target
+# Prepare X and y
 X = df[["Pclass", "Sex", "Age"]]
 y = df["Survived"]
 
-# Encode categorical column 'Sex'
+# Encode 'Sex'
 X = pd.get_dummies(X, columns=["Sex"], drop_first=True)
 
-# ✅ Save both X and y together
-pickle_file_path = "pickle_files/notebook.pkl"
-with open(pickle_file_path, "wb") as f:
+# ✅ Save dictionary with X and y
+with open("pickle_files/notebook.pkl", "wb") as f:
     pickle.dump({"X": X, "y": y}, f)
 
-print("✅ Corrected pickle saved at:", pickle_file_path)
+print("✅ Pickle created: pickle_files/notebook.pkl")
