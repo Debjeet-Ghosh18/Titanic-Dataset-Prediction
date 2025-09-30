@@ -12,11 +12,11 @@ with open(notebook_path, "r", encoding="utf-8") as f:
 exporter = PythonExporter()
 python_code, _ = exporter.from_notebook_node(nb)
 
-# Execute the notebook code in a separate namespace
+# Execute notebook code in a separate namespace
 namespace = {}
 exec(python_code, namespace)
 
-# Extract df from the executed notebook
+# Get dataframe
 df = namespace.get("df")
 if df is None:
     raise ValueError("DataFrame 'df' not found in the notebook.")
@@ -28,9 +28,9 @@ y = df["Survived"]
 # Encode categorical column 'Sex'
 X = pd.get_dummies(X, columns=["Sex"], drop_first=True)
 
-# Save X and y as a single pickle file
+# ✅ Save both X and y together
 pickle_file_path = "pickle_files/notebook.pkl"
 with open(pickle_file_path, "wb") as f:
     pickle.dump({"X": X, "y": y}, f)
 
-print(f"Pickle file '{pickle_file_path}' created successfully!")
+print("✅ Corrected pickle saved at:", pickle_file_path)
