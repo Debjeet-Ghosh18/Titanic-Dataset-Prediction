@@ -15,4 +15,11 @@ Building an interactive Streamlit interface
 1️⃣ Clone the repository
 git clone https://github.com/your-username/titanic-prediction.git
 cd titanic-prediction
+requirements.txt contains:
+
+streamlit
+pandas
+scikit-learn
+nbformat
+nbconvert
 
