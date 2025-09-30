@@ -11,3 +11,8 @@ Training a simple Logistic Regression model
 
 Building an interactive Streamlit interface
 
+⚙️ Installation
+1️⃣ Clone the repository
+git clone https://github.com/your-username/titanic-prediction.git
+cd titanic-prediction
+
